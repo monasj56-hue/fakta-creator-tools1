@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fakta Creator Tools</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #101319;
+  color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+  padding: 24px 16px;
+}
+
+.header {
+  margin-bottom: 25px;
+}
+
+.logo {
+  color: #75e0b1;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: 29px;
+  margin: 12px 0;
+}
+
+.subtitle {
+  color: #a4aab5;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.card {
+  background: #191e27;
+  border: 1px solid #2b3340;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  color: #c5ccd6;
+  margin-bottom: 9px;
+}
+
+input, textarea, select {
+  width: 100%;
+  background: #10141b;
+  border: 1px solid #343d4b;
+  border-radius: 10px;
+  padding: 13px;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 16px;
+  outline: none;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+input:focus, textarea:focus {
+  border-color: #75e0b1;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.generate {
+  width: 100%;
+  background: #75e0b1;
+  color: #101319;
+}
+
+.copy {
+  background: #29313d;
+  color: #e9edf4;
+  margin-top: 10px;
+}
+
+.output {
+  white-space: pre-wrap;
+  line-height: 1.7;
+  color: #dce2eb;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.footer {
+  text-align: center;
+  color: #737d8b;
+  font-size: 12px;
+  padding: 20px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header class="header">
+    <div class="logo">HULL • CREATOR TOOLS</div>
+    <h1>Fakta Creator Tools</h1>
+    <p class="subtitle">
+      Bantu persiapkan konten fakta unik untuk
+      YouTube Shorts dan TikTok.
+    </p>
+  </header>
+
+  <section class="card">
+    <label for="topic">Topik fakta</label>
+    <input
+      id="topic"
+      placeholder="Contoh: Gurita memiliki tiga jantung"
+    >
+
+    <label for="fact">Informasi atau fakta utama</label>
+    <textarea
+      id="fact"
+      placeholder="Masukkan fakta yang sudah kamu riset..."
+    ></textarea>
+
+    <label for="duration">Durasi video</label>
+    <select id="duration">
+      <option value="30">30 detik</option>
+      <option value="40">40 detik</option>
+      <option value="50">50 detik</option>
+    </select>
+
+    <button class="generate" onclick="generateContent()">
+      Buat Paket Konten
+    </button>
+  </section>
+
+  <section class="card">
+    <label>Hasil paket konten</label>
+    <div id="output" class="output">
+      Hasil konten kamu akan muncul di sini.
+    </div>
+
+    <button class="copy" onclick="copyContent()">
+      Salin Hasil
+    </button>
+  </section>
+
+  <div class="footer">
+    Fakta Creator Tools v1.0 • Made for creators
+  </div>
+
+</div>
+
+<script>
+function generateContent() {
+  const topic = document
+    .getElementById("topic")
+    .value.trim();
+
+  const fact = document
+    .getElementById("fact")
+    .value.trim();
+
+  const duration = document
+    .getElementById("duration")
+    .value;
+
+  if (!topic || !fact) {
+    alert("Isi topik dan fakta terlebih dahulu!");
+    return;
+  }
+
+  const result = `
+PAKET KONTEN FAKTA
+
+TOPIK:
+${topic}
+
+HOOK:
+"Kamu pasti belum tahu fakta menarik tentang ${topic}!"
+
+NARASI:
+${fact}
+
+PENUTUP:
+"Menarik bukan? Ternyata masih banyak fakta
+unik lainnya yang belum kita ketahui."
+
+JUDUL:
+"${topic} — Fakta Unik yang Jarang Diketahui!"
+
+DURASI:
+${duration} detik
+
+HASHTAG:
+#FaktaUnik #FaktaMenarik #TahukahKamu
+#Pengetahuan #Shorts #TikTok
+
+CATATAN EDITING:
+0-3 detik:
+Tampilkan hook dengan zoom-in cepat.
+
+3-10 detik:
+Tampilkan visual utama sesuai topik.
+
+10-${duration - 5} detik:
+Jelaskan fakta menggunakan subtitle.
+
+${duration - 5}-${duration} detik:
+Tampilkan penutup dan ajakan berkomentar.
+
+CATATAN:
+Periksa kembali kebenaran fakta dan sumbernya
+sebelum video dipublikasikan.
+`;
+
+  document.getElementById("output").textContent =
+    result.trim();
+}
+
+function copyContent() {
+  const text = document
+    .getElementById("output")
+    .textContent;
+
+  if (!text || text.includes("akan muncul")) {
+    alert("Buat paket konten terlebih dahulu!");
+    return;
+  }
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text)
+      .then(() => alert("Berhasil disalin!"))
+      .catch(() => fallbackCopy(text));
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const area = document.createElement("textarea");
+  area.value = text;
+  document.body.appendChild(area);
+  area.select();
+
+  try {
+    document.execCommand("copy");
+    alert("Berhasil disalin!");
+  } catch (e) {
+    alert("Silakan salin hasil secara manual.");
+  }
+
+  area.remove();
+}
+</script>
+
+</body>
+</html>
